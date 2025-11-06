@@ -1,17 +1,15 @@
 import React, { useState } from 'react'
 import './App.css'
 import type { Task } from './types/Task';
+import TaskForm from './components/TaskForm';
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [title, setTitle] = useState("");
 
-  const addTask = (e: React.FormEvent) => {
-    e.preventDefault();
+  const addTask = (title: string) => {
     if (!title.trim()) return;
     const newTask: Task = { id: Date.now(), title, completed: false };
     setTasks([...tasks, newTask]);
-    setTitle("");
   };
 
   const deleteTask = (id: number) => {
@@ -26,12 +24,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-200 flex flex-col items-center p-4">
       <h1 className='text-3xl font-bold mb-4'>Taskify</h1>
-      <form className='flex gap-2 mb-4' onSubmit={addTask}>
-        <input className='border p-2 rounded w-64' type="text" placeholder='Ajouter une tâche' 
-          value={title} onChange={(e) => setTitle(e.target.value)}/>
-        <button className='bg-blue-500 text-white px-4 py-2 rounded'>Ajouter</button>
-      </form>
-
+      <TaskForm onAdd={addTask} />
       {/* Liste des taches */}
       <ul className='w-72'>
         {tasks.length === 0 ? (
