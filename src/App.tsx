@@ -22,6 +22,12 @@ function App() {
   const deleteTask = (id: number) => {
     setTasks(tasks.filter((t) => t.id !== id));
   }
+  
+  const toggleTask = (id: number) => {
+    setTasks(tasks.map((t) => (
+      t.id === id ? { ...t, completed: !t.completed } : t
+    )));
+  };
   return (
     <div className="min-h-screen bg-gray-200 flex flex-col items-center p-4">
       <h1 className='text-3xl font-bold mb-4'>Taskify</h1>
@@ -38,7 +44,7 @@ function App() {
         ): (
           tasks.map((t) => (
           <li key={t.id} className='flex justify-between bg-white p-2 mb-2 rounded shadow'>
-            <span className={`cursor-pointer ${t.completed ? 'line-through text-gray-400': ''}`}>
+            <span onClick={() => toggleTask(t.id)} className={`cursor-pointer ${t.completed ? 'line-through text-gray-400': ''}`}>
               {t.title}
             </span>
             <button onClick={() => deleteTask(t.id)} 
