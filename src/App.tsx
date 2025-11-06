@@ -1,11 +1,6 @@
 import React, { useState } from 'react'
 import './App.css'
-
-interface Task {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+import type { Task } from './types/Task';
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -22,7 +17,7 @@ function App() {
   const deleteTask = (id: number) => {
     setTasks(tasks.filter((t) => t.id !== id));
   }
-  
+
   const toggleTask = (id: number) => {
     setTasks(tasks.map((t) => (
       t.id === id ? { ...t, completed: !t.completed } : t
